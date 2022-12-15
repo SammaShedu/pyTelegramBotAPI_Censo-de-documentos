@@ -15,11 +15,9 @@ import time
 #-------------------------------------------------------------------------------
 # VARIABLES AUXILIARES
 #-------------------------------------------------------------------------------
-TOKEN = './Token'    #@magiacaos2bot
-CHAT_magiacaos = -10012308733916        # Canal a escanear
-# CHAT_biblioteca = 2892125423            # Canal donde se recopila la información
-# CHAT_biblioteca = -4539772736            # Canal donde se recopila la información
-CHAT_biblioteca = -10012226978649            # Canal donde se recopila la información
+TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXX'   # Cambiar por el token del bot
+CHAT_censo = 9999999999             # ID del canal a censar
+CHAT_biblioteca = 9999999999            # ID del canal donde se recopila la información
 f_mens = "./ult_mensaje_tratado"
 f_docs = "./censo_documentos"
 f_fileids = "./fileids"
@@ -50,7 +48,6 @@ def listener(mensajes):
     with open(f_docs, "a") as file2:
         for m in mensajes:
             chat_name = m.chat.username
-
 
             if (m.content_type == "document"):
                 print("    --> Es documento tipo " + str(m.document.mime_type))
@@ -100,21 +97,6 @@ def listener(mensajes):
                     with open(f_fileids, "a") as file3:
                         file3.write(ufileid + "\n")
 
-# Control de usuario para evitar troleos
-def validar_usuario(m):
-    dic1 = m.json
-    dic2 = dic1["from"]
-
-    # print("-------------------------------------------------------------------")
-    # print(json.dumps(m.json, indent=4))
-    # print(dic2)
-    # print("-------------------------------------------------------------------")
-
-    if dic2["username"] == "user":
-        return True
-    else:
-        return False
-
 def recuperar_fileids():
     with open(f_fileids, "r") as file3:
         return file3.readlines()
@@ -133,21 +115,19 @@ def func_start(m):
     uid = m.from_user.id
     mid = m.message_id
 
-    # Si no está censado el canal crea los ficheros para escanear
+    # Si no está censado el canal crea los ficheros para censar
 
     # print("-------------------------------------------------------------------")
     # print(json.dumps(m.json, indent=4))
     # print("-------------------------------------------------------------------")
 
-    bot.send_message(cid,"¡Hola!\nSoy un bot de apoyo para censar los libros del grupo y copiarlos a la nueva Biblioteca .\n\n- Para *comenzar el proceso* pulsa /escanear\n- Para *exportar* el fichero resultante (transportable a Excel) pulsa /exportar",  parse_mode="Markdown")
+    bot.send_message(cid,"¡Hola!\nSoy un bot de apoyo para censar los libros del grupo y copiarlos a la nueva Biblioteca .\n\n- Para *comenzar el proceso* pulsa /censar\n- Para *exportar* el fichero resultante (transportable a Excel) pulsa /exportar",  parse_mode="Markdown")
 
-@bot.message_handler(commands=['escanear'])
-def func_escanear(m):
+@bot.message_handler(commands=['censar'])
+def func_censar(m):
     if validar_usuario(m) == True:
-        # cid = -10010883418515           # Chat @magiacaos
-        cid = -10011479899020            # Chat @alejandriak
-        # chat_name = "magiacaos"
-        chat_name = "alejandriak"
+        cid = -99999999999999            # Cambiar por el ID del grupo a censar
+        chat_name = "xxxxxxxxxx"         # Cambiar por el nombre del grupo a censar
         uid = m.from_user.id
         mid = m.message_id
 
